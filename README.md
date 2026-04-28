@@ -53,23 +53,27 @@ Socket programming finds applications in various domains, including web developm
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 
-# Program:
+# Program
 ```
 import socket
 import threading
 import time 
+
 def server():
-    s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(("127.0.0.1",5000))
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(("127.0.0.1", 5000))
     s.listen(1)
-    print("server waiting")
+    print("Server is waiting for a connection...")
 
-    conn, addr=s.accept()
-    print("connected by :",addr)
-    data=conn.recv(1024)
-    print("client says: ",data.decode())
+    conn, addr = s.accept()
+    print("Connected by:", addr)
 
-    conn.send("Hello from Saveetha ".encode())
+    data = conn.recv(1024)
+    print("Client says:", data.decode())
+
+    # Changed response message
+    conn.send("Hi! Nice to meet you. How can I help you?".encode())
+
     conn.close()
     s.close()
 
@@ -79,7 +83,8 @@ def client():
     c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     c.connect(("127.0.0.1", 5000))
 
-    c.send("Welcome".encode())
+    # Changed client message
+    c.send("Hello Server! I need some information.".encode())
 
     response = c.recv(1024)
     print("Server says:", response.decode())
@@ -94,11 +99,13 @@ client_thread.start()
 
 server_thread.join()
 client_thread.join()
+
 ```
 
 # Output:
 
-<img width="1135" height="477" alt="image" src="https://github.com/user-attachments/assets/fd13433f-dec2-43c9-81a1-31558850ccc0" />
+<img width="616" height="102" alt="Screenshot 2026-04-28 154126 - Copy" src="https://github.com/user-attachments/assets/b0b1a226-725c-425f-aa49-2444e4bb5cdd" />
+
 
 
 
