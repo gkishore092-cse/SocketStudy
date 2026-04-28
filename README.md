@@ -4,9 +4,9 @@
 To perform a study on Socket Programming
 ## Introduction:
 
- 	Socket programming is a crucial aspect of network communication, allowing for data exchange between computers over a network. It forms the backbone of various networked applications, enabling communication between clients and servers. This study explores the fundamental concepts of socket programming, its use cases, and provides a practical example to demonstrate its implementation.
+Socket programming is a crucial aspect of network communication, allowing for data exchange between computers over a network. It forms the backbone of various networked applications, enabling communication between clients and servers. This study explores the fundamental concepts of socket programming, its use cases, and provides a practical example to demonstrate its implementation.
 ## Understanding Socket Programming:
-	Socket programming involves the use of sockets, which serve as endpoints for communication. A socket is identified by an IP address and a port number, and it facilitates data transfer between a client and a server. The two main types of sockets are Stream Sockets, which provide a reliable, connection-oriented communication, and Datagram Sockets, which are connectionless and suitable for scenarios where reliability is less critical.
+Socket programming involves the use of sockets, which serve as endpoints for communication. A socket is identified by an IP address and a port number, and it facilitates data transfer between a client and a server. The two main types of sockets are Stream Sockets, which provide a reliable, connection-oriented communication, and Datagram Sockets, which are connectionless and suitable for scenarios where reliability is less critical.
 ## Key Concepts in Socket Programming:
 1.Sockets
 •	A socket is a software representation of a communication endpoint in a network.
@@ -14,7 +14,7 @@ To perform a study on Socket Programming
 •	Sockets can be classified into two main types: Stream Sockets and Datagram Sockets.
 •	Stream Sockets provide a reliable, connection-oriented communication, while Datagram Sockets are connectionless and operate in a best-effort mode.
 
-2. Client-Server Model
+2.Client-Server Model
 
 •	Socket programming typically follows the client-server model.
 •	The server listens for incoming connections from clients, while clients initiate connections to the server.
@@ -52,6 +52,55 @@ Socket programming finds applications in various domains, including web developm
 3.	File Transfer Protocol: Protocols like FTP (File Transfer Protocol) utilize socket programming for transferring files between a client and a server.
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
+
+# Program:
+```
+import socket
+import threading
+import time 
+def server():
+    s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(("127.0.0.1",5000))
+    s.listen(1)
+    print("server waiting")
+
+    conn, addr=s.accept()
+    print("connected by :",addr)
+    data=conn.recv(1024)
+    print("client says: ",data.decode())
+
+    conn.send("Hello from Saveetha ".encode())
+    conn.close()
+    s.close()
+
+def client():
+    time.sleep(1)
+
+    c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    c.connect(("127.0.0.1", 5000))
+
+    c.send("Welcome".encode())
+
+    response = c.recv(1024)
+    print("Server says:", response.decode())
+
+    c.close()
+
+server_thread = threading.Thread(target=server)
+client_thread = threading.Thread(target=client)
+
+server_thread.start()
+client_thread.start()
+
+server_thread.join()
+client_thread.join()
+```
+
+# Output:
+
+<img width="1135" height="477" alt="image" src="https://github.com/user-attachments/assets/fd13433f-dec2-43c9-81a1-31558850ccc0" />
+
+
 
 
 ## Result:
